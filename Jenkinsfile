@@ -1,24 +1,21 @@
-Spipeline {
+pipeline {
     agent { label 'docker-ssh-jenkins-agent' }
-
     stages {
         stage('Build') {
             steps {
                 sh 'npm install'
-                sh 'npm run build'
             }
         }
-
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
             }
         }
-
-        stage('Deploy') {
+        stage('Deliver') {
             steps {
-                sh './kill.sh'
-                sh './deliver.sh'
+                sh './jenkins/scripts/deliver.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
             }
         }
     }
