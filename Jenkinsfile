@@ -7,5 +7,11 @@ pipeline {
                 echo 'Running build step...'
             }
         }
+
+        stage('Test') {
+            steps {
+                echo 'Running test step...'
+            }
+        }
     }
 }
